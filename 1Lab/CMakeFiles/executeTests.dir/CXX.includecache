@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/c++/Lab/1Lab/Trit.h
+iostream
+-
+
+/mnt/c/c++/Lab/1Lab/TritSet.h
+new
+-
+Trit.h
+/mnt/c/c++/Lab/1Lab/Trit.h
+
+/mnt/c/c++/Lab/1Lab/TritTest.cpp
+trit.h
+/mnt/c/c++/Lab/1Lab/trit.h
+tritset.h
+/mnt/c/c++/Lab/1Lab/tritset.h
+gtest/gtest.h
+-
+
+/mnt/c/c++/Lab/1Lab/trit.cpp
+Trit.h
+/mnt/c/c++/Lab/1Lab/Trit.h
+
+/mnt/c/c++/Lab/1Lab/trit.h
+iostream
+-
+
+/mnt/c/c++/Lab/1Lab/tritset.cpp
+TritSet.h
+/mnt/c/c++/Lab/1Lab/TritSet.h
+
+/mnt/c/c++/Lab/1Lab/tritset.h
+new
+-
+Trit.h
+/mnt/c/c++/Lab/1Lab/Trit.h
+

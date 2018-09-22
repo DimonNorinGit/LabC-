@@ -31,9 +31,26 @@ TritSet::TritSet(size_t alloc_trits) {
 };
 
 
+Trit TritSet::operator[](const size_t trit_i)const{
+	size_t trit_index = trit_i;
+	if (trit_index >= trits_capacity) {
+			throw std::out_of_range("hey");///////////
+	}
+	trit_index++;
+	size_t full_index = trit_index * 2 / 8 / UN_INT_SIZE;
+	size_t diff = (trit_index * 2) % (8 * UN_INT_SIZE);
+	Trit wrapper;
+	if (diff == 0) {
+		wrapper.set_trit(data_array + full_index - 1, UN_INT_SIZE * 8 , false);
+	}
+	else {
+		wrapper.set_trit(data_array + full_index , diff , false);
+	}
+	return wrapper;//check
+}
 
-
-Trit TritSet::operator[](size_t trit_index) {
+Trit TritSet::operator[](const size_t trit_i) {
+	size_t trit_index = trit_i;
 	if (trit_index >= trits_capacity) {
 		throw std::out_of_range("hey");///////////
 	}
@@ -53,8 +70,7 @@ Trit TritSet::operator[](size_t trit_index) {
 
 
 
-Trit TritSet::execute_operation(Trit const & a , Trit const & b , OperationType type) {
-
+Trit TritSet::execute_operation(Trit const & a , Trit const & b , OperationType type)const{
 	if (type == And) {
 		return (a & b);
 	}
@@ -64,8 +80,8 @@ Trit TritSet::execute_operation(Trit const & a , Trit const & b , OperationType 
 }
 
 
-TritSet& TritSet::init_operation(TritSet & obj, OperationType type) {
-	TritSet* greater = nullptr;
+TritSet& TritSet::init_operation(TritSet const & obj, OperationType type)const {
+	const TritSet* greater = nullptr;
 	size_t res_trits_size;
 	size_t less_size;
 	if (trits_capacity > obj.trits_capacity) {
@@ -93,16 +109,16 @@ TritSet& TritSet::init_operation(TritSet & obj, OperationType type) {
 }
 
 
-TritSet& TritSet::operator&(TritSet & obj) {
-	return init_operation(obj, And);
+TritSet& operator&(TritSet const & self , TritSet const & obj) {
+	return self.init_operation(obj, And);
 }
 
-TritSet& TritSet::operator|(TritSet & obj) {
-	return init_operation(obj, Or);
+TritSet& operator|(TritSet const & self , TritSet const & obj) {
+	return self.init_operation(obj, Or);
 }
 
 
-TritSet::TritSet(TritSet const& obj)
+TritSet::TritSet(TritSet const & obj)
 	:data_length(obj.data_length) , trits_capacity(obj.trits_capacity) , used_capacity(obj.used_capacity) ,used_length(obj.used_length){
 	data_array = new unsigned int[data_length];
 	for (size_t i = 0; i < data_length; ++i) {
@@ -112,7 +128,7 @@ TritSet::TritSet(TritSet const& obj)
 
 
 
-TritSet & TritSet::operator=(TritSet const& obj) {
+TritSet & TritSet::operator=(TritSet const & obj) {
 
 	if (this !=& obj) {
 		TritSet(obj).swap(*this);
@@ -125,7 +141,7 @@ void TritSet::shrink_to_fit() {
 	resize_data(used_length , used_capacity);
 }
 
-size_t TritSet::cardinality(Trit value) {
+size_t TritSet::cardinality(Trit value)const {
 	size_t value_count = 0;
 
 	for (size_t i = 0; i < trits_capacity; ++i) {

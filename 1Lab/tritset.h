@@ -8,13 +8,12 @@
 //01 - True
 //00 - Unknown
 //10 - False
-
+enum OperationType { And, Or };
 
 class TritSet
 {
 
 private:
-	enum OperationType { And, Or };
 	unsigned int* data_array;
 	size_t trits_capacity;//all
 	size_t data_length;//all
@@ -25,15 +24,15 @@ private:
 	void set_used_capacity()const;
 	void fill_unknown(size_t start, size_t end);
 	void resize_data(size_t end, size_t tr_length);
-	Trit execute_operation(Trit const & a, Trit const & b , OperationType type);
-	TritSet& init_operation(TritSet & obj, OperationType type);
+	Trit execute_operation(Trit const & a, Trit const & b , OperationType type)const;
+	TritSet& init_operation(TritSet const & obj, OperationType type)const;
 
 public:
 	TritSet();
 
 	TritSet(size_t alloc_trits);
 
-	size_t cardinality(Trit value);
+	size_t cardinality(Trit value)const;
 
 	size_t capacity() const;
 
@@ -49,11 +48,13 @@ public:
 
 	TritSet & operator=(TritSet const& obj);
 
-	Trit operator[](size_t trit_index);
+	Trit operator[](size_t trit_i);
 
-	TritSet& operator&(TritSet  & obj);
+	Trit operator[](size_t trit_i)const;
 
-	TritSet& operator|(TritSet & obj);
+	friend TritSet& operator&(TritSet const & self , TritSet const & obj);
+
+	friend TritSet& operator|(TritSet const & self , TritSet const & obj);
 
 	~TritSet();
 };

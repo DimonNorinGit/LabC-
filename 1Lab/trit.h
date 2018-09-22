@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 enum class TritType:int
-{False = 0 , Unknown = 1 , True = 2 };
+{False = 0 , Unknown = 1 , True = 2};
 
 enum{UN_INT_SIZE = sizeof(unsigned int)};
 
@@ -24,9 +24,10 @@ namespace Tables {
 }
 
 
-class Trit
-{
+class Trit{
+
 private:
+
 	unsigned char* data;
 	size_t right_bit;
 	bool another;
@@ -36,6 +37,10 @@ private:
 	void init_trit();
 	void set_bit(unsigned char pointer, Trit const & obj, size_t diff);
 	void set_new_value(TritType type, unsigned char pointer);
+	void set_true(unsigned char pointer);
+	void set_false(unsigned char pointer);
+	void set_unknown(unsigned char pointer);
+
 public:
 	TritType get_type() const;
 
@@ -49,11 +54,11 @@ public:
 
 	Trit& operator=(Trit const & obj);
 
-	friend const Trit& operator&(Trit const & self, Trit const & obj);
+	friend Trit& operator&(Trit const & self, Trit const & obj);
 
 	friend std::ostream& operator<<(std::ostream& stream, Trit const & trit);
 
-	friend const Trit& operator|(Trit const & self, Trit const & obj);
+	friend Trit& operator|(Trit const & self, Trit const & obj);
 
 	friend bool operator==(Trit const & self, Trit const & obj);
 
@@ -61,15 +66,9 @@ public:
 
 	//const Trit& operator|(Trit const & obj);
 
-	Trit const & operator!();
+	Trit& operator!();
 
 	void set_trit(unsigned int* data, size_t diff , bool another);
-
-	void set_true(unsigned char pointer);
-
-	void set_false(unsigned char pointer);
-
-	void set_unknown(unsigned char pointer);
 
 	~Trit();
 };

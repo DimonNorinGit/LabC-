@@ -1,16 +1,4 @@
 #include "Trit.h"
-
-
-/*size_t& Trit::get_pos() {
-	return right_bit;
-}
-unsigned int*  & Trit::get_data() {
-	return data;
-}
-*/
-
-
-
 Trit::Trit() {
 	data = nullptr;
 	right_bit = 2;
@@ -40,22 +28,24 @@ Trit::Trit(Trit const & obj) {
 	}
 }
 
-
-
 int Trit::get_data()const {
 	return *data;
 }
+
 int Trit::get_pos()const {
 	return right_bit;
 }
+
 void Trit::set_trit(unsigned int* d, size_t diff , bool another) {
 	size_t b_pos = (diff - 1) / 8;
-
 	right_bit = diff - b_pos * 8;
 	data = ((unsigned char*)d) + b_pos;
+
+	if(!another){
+		init_trit();
+	}	
 	this->another = another;
 }
-
 
 void Trit::init_trit() {
 	unsigned char* new_data = new unsigned char;
@@ -197,15 +187,15 @@ const Trit& Trit::operator|(Trit const & obj) {
 }*/
 
 
-const Trit& operator&(Trit const & self, Trit const & obj) {
-TritType l_type = self.get_type();
-TritType r_type = obj.get_type();
+Trit& operator&(Trit const & self, Trit const & obj) {
+	TritType l_type = self.get_type();
+	TritType r_type = obj.get_type();
 
-Trit* res_obj = new Trit();
+	Trit* res_obj = new Trit();
 
-*res_obj = Tables::AndTable[int(l_type)][int(r_type)];
+	*res_obj = Tables::AndTable[int(l_type)][int(r_type)];
 
-return *res_obj;
+	return *res_obj;
 }
 
 bool operator==(Trit const & self, Trit const & obj) {
@@ -214,18 +204,18 @@ bool operator==(Trit const & self, Trit const & obj) {
 	return a == b ? true : false;
 }
 
-const Trit& operator|(Trit const & self, Trit const & obj) {
-TritType l_type = self.get_type();
-TritType r_type = obj.get_type();
+Trit& operator|(Trit const & self, Trit const & obj) {
+	TritType l_type = self.get_type();
+	TritType r_type = obj.get_type();
 
-Trit* res_obj = new Trit();
+	Trit* res_obj = new Trit();
 
-*res_obj = Tables::OrTable[int(l_type)][int(r_type)];
+	*res_obj = Tables::OrTable[int(l_type)][int(r_type)];
 
-return *res_obj;
+	return *res_obj;
 }
 
-Trit const & Trit::operator!() {
+Trit & Trit::operator!() {
 	TritType type = get_type();
 	Trit* res_obj = new Trit();
 	*res_obj = Tables::NegTable[int(type)];

@@ -87,13 +87,13 @@ void Trit::set_unknown(unsigned char pointer) {
 
 
 void Trit::set_new_value(TritType type , unsigned char pointer) {
-	if (type == True) {
+	if (type == TritType::True) {
 		set_true(pointer);
 	}
-	else if (type == False) {
+	else if (type == TritType::False) {
 		set_false(pointer);
 	}
-	else if (type == Unknown) {
+	else if (type == TritType::Unknown) {
 		set_unknown(pointer);
 	}
 
@@ -121,15 +121,15 @@ TritType Trit::get_type()const {
 	unsigned char pointer = 1;
 	pointer <<= (sizeof(unsigned char) * 8 - get_pos());
 	if (pointer & get_data()) {
-		return True;
+		return TritType::True;
 	}
 	else {
 		pointer <<= (1);
 		if (pointer & get_data()) {
-			return False;
+			return TritType::False;
 		}
 		else {
-			return Unknown;
+			return TritType::Unknown;
 		}
 	}
 }
@@ -203,7 +203,7 @@ TritType r_type = obj.get_type();
 
 Trit* res_obj = new Trit();
 
-*res_obj = Tables::AndTable[l_type][r_type];
+*res_obj = Tables::AndTable[int(l_type)][int(r_type)];
 
 return *res_obj;
 }
@@ -220,7 +220,7 @@ TritType r_type = obj.get_type();
 
 Trit* res_obj = new Trit();
 
-*res_obj = Tables::OrTable[l_type][r_type];
+*res_obj = Tables::OrTable[int(l_type)][int(r_type)];
 
 return *res_obj;
 }
@@ -228,7 +228,7 @@ return *res_obj;
 Trit const & Trit::operator!() {
 	TritType type = get_type();
 	Trit* res_obj = new Trit();
-	*res_obj = Tables::NegTable[type];
+	*res_obj = Tables::NegTable[int(type)];
 	return *res_obj;
 }
 Trit::~Trit()

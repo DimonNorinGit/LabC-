@@ -33,6 +33,7 @@ public:
 
 	TritSet(size_t alloc_trits);
 
+	size_t cardinality(Trit value);
 
 	size_t capacity() const;
 
@@ -40,15 +41,15 @@ public:
 
 	TritSet(TritSet const& obj);
 
-	TritSet & operator=(TritSet const& obj);
-
 	void swap(TritSet & obj);
-
-	Trit operator[](size_t trit_index);
 
 	void shrink_to_fit();
 
 	void resize(size_t new_size);/////
+
+	TritSet & operator=(TritSet const& obj);
+
+	Trit operator[](size_t trit_index);
 
 	TritSet& operator&(TritSet  & obj);
 

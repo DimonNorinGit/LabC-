@@ -1,15 +1,26 @@
 #pragma once
 #include<iostream>
-enum TritType{ False , Unknown , True };
-enum{UN_INT_SIZE = sizeof(unsigned int) };
+enum class TritType:int
+{False = 0 , Unknown = 1 , True = 2 };
+
+enum{UN_INT_SIZE = sizeof(unsigned int)};
 
 namespace Tables {
+	const TritType AndTable[3][3] =
+	{
+		{ TritType::False , TritType::False , TritType::False },
+		{ TritType::False , TritType::Unknown , TritType::Unknown },
+		{ TritType::False , TritType::Unknown , TritType::True }
+	};
 
-	const TritType AndTable[3][3] = { { False , False , False }  ,{ False , Unknown , Unknown } ,{ False , Unknown , True } };
+	const TritType OrTable[3][3] =
+	{
+		{ TritType::False , TritType::Unknown , TritType::True },
+		{ TritType::Unknown , TritType::Unknown , TritType::True },
+		{ TritType::True , TritType::True , TritType::True }
+	};
 
-	const TritType OrTable[3][3] = { { False , Unknown , True }  ,{ Unknown , Unknown , True } ,{ True , True , True } };
-
-	const TritType NegTable[3] = { True , Unknown , False };
+	const TritType NegTable[3] = { TritType::True , TritType::Unknown , TritType::False };
 }
 
 
@@ -43,6 +54,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& stream, Trit const & trit);
 
 	friend const Trit& operator|(Trit const & self, Trit const & obj);
+
+	friend bool operator==(Trit const & self, Trit const & obj);
 
 	//const Trit& operator&(Trit const & obj);
 

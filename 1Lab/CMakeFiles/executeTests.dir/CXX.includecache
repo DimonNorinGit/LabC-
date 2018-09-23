@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/c++/Lab/1Lab/Trit.h
-iostream
--
-
-/mnt/c/c++/Lab/1Lab/TritSet.h
-new
--
-Trit.h
-/mnt/c/c++/Lab/1Lab/Trit.h
-
 /mnt/c/c++/Lab/1Lab/TritTest.cpp
 trit.h
 /mnt/c/c++/Lab/1Lab/trit.h
@@ -25,20 +15,28 @@ gtest/gtest.h
 -
 
 /mnt/c/c++/Lab/1Lab/trit.cpp
-Trit.h
-/mnt/c/c++/Lab/1Lab/Trit.h
+trit.h
+/mnt/c/c++/Lab/1Lab/trit.h
 
+/mnt/c/c++/Lab/1Lab/trit.h
+
+/mnt/c/c++/Lab/1Lab/tritref.cpp
+tritref.h
+/mnt/c/c++/Lab/1Lab/tritref.h
+
+/mnt/c/c++/Lab/1Lab/tritref.h
+trit.h
 /mnt/c/c++/Lab/1Lab/trit.h
 iostream
 -
 
 /mnt/c/c++/Lab/1Lab/tritset.cpp
-TritSet.h
-/mnt/c/c++/Lab/1Lab/TritSet.h
+tritset.h
+/mnt/c/c++/Lab/1Lab/tritset.h
 
 /mnt/c/c++/Lab/1Lab/tritset.h
 new
 -
-Trit.h
-/mnt/c/c++/Lab/1Lab/Trit.h
+tritref.h
+/mnt/c/c++/Lab/1Lab/tritref.h
 

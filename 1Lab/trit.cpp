@@ -1,228 +1,52 @@
-#include "Trit.h"
-Trit::Trit() {
-	data = nullptr;
-	right_bit = 2;
-	another = false;
+#include "trit.h"
+
+
+namespace Tables {
+	using namespace Types;
+	const Trit AndTable[3][3] = {
+		{ False , False , False },
+	{ False , Unknown , Unknown },
+	{ False , Unknown , True }
+	};
+
+	const Trit OrTable[3][3] = {
+		{ False , Unknown , True },
+	{ Unknown , Unknown , True },
+	{ True , True , True }
+	};
+	const Trit NegTable[3] = { True , Unknown , False };
 }
 
-Trit::Trit(TritType obj) {
-	data = new unsigned char;
-	right_bit = 2;
-	*data = 0;
-	set_new_value(obj  , (unsigned char)1 << (sizeof(unsigned char) * 8 - right_bit));
+Trit::Trit()
+{
+	data = 1;
 }
 
-Trit::Trit(Trit const & obj) {
-	if (this != &obj) {
-		if (obj.another) {
-			data = obj.data;
-			right_bit = obj.right_bit;
-			another = true;
-		}
-		else {
-			data = new unsigned char;
-			*data = *obj.data;
-			right_bit = obj.right_bit;
-			another = false;
-		}
-	}
+Trit::operator int()const {
+	return data;
 }
 
-int Trit::get_data()const {
-	return *data;
+Trit::Trit(unsigned char d)
+{
+	data = d;
 }
 
-int Trit::get_pos()const {
-	return right_bit;
+Trit operator&(Trit const & self, Trit const & obj) {
+	return Tables::AndTable[self + 2][obj + 2];
 }
 
-void Trit::set_trit(unsigned int* d, size_t diff , bool another) {
-	size_t b_pos = (diff - 1) / 8;
-	right_bit = diff - b_pos * 8;
-	data = ((unsigned char*)d) + b_pos;
-
-	if(!another){
-		init_trit();
-	}	
-	this->another = another;
-}
-
-void Trit::init_trit() {
-	unsigned char* new_data = new unsigned char;
-	*new_data = *data;
-	data = new_data;
-}
-
-void Trit::set_true(unsigned char pointer) {
-	*data = *data | pointer;
-	pointer <<= (1);
-	pointer = ~pointer;
-	*data = *data & pointer;
-}
-void Trit::set_false(unsigned char pointer) {
-	pointer = ~pointer;
-	*data = *data & pointer;
-	pointer = ~pointer;
-	pointer <<= (1);
-	*data = *data | pointer;
-}
-
-void Trit::set_unknown(unsigned char pointer) {
-	unsigned int keep_p = ~pointer;
-	*data = *data & keep_p;
-	pointer <<= (1);
-	pointer = ~pointer;
-	*data = *data & pointer;
-}
-
-
-void Trit::set_new_value(TritType type , unsigned char pointer) {
-	if (type == TritType::True) {
-		set_true(pointer);
-	}
-	else if (type == TritType::False) {
-		set_false(pointer);
-	}
-	else if (type == TritType::Unknown) {
-		set_unknown(pointer);
-	}
-
-}
-
-Trit& Trit::operator=(TritType type) {
-	unsigned char pointer = 1;
-	pointer <<= (sizeof(unsigned char) * 8 - right_bit);
-	if (data == nullptr) {
-		data = new unsigned char;
-		right_bit = 2;
-		*data = 0;
-		set_new_value(type , pointer);
-	}
-	else {
-		set_new_value(type , pointer);
-		init_trit();
-		another = false;
-	}
-	return *this;
-}
-
-
-TritType Trit::get_type()const {
-	unsigned char pointer = 1;
-	pointer <<= (sizeof(unsigned char) * 8 - get_pos());
-	if (pointer & get_data()) {
-		return TritType::True;
-	}
-	else {
-		pointer <<= (1);
-		if (pointer & get_data()) {
-			return TritType::False;
-		}
-		else {
-			return TritType::Unknown;
-		}
-	}
-}
-void Trit::set_bit(unsigned char pointer , Trit const & obj , size_t diff) {
-	if (pointer & *obj.data) {
-		pointer = 1;
-		pointer <<= (sizeof(unsigned char) * 8 - right_bit + diff);
-		*data = *data | pointer;
-	}
-	else {
-		pointer = 1;
-		pointer <<= (sizeof(unsigned char) * 8 - right_bit + diff);
-		pointer = ~pointer;
-		*data = *data & pointer;
-	}
-}
-
-Trit& Trit::operator=(Trit const & obj) {
-	unsigned char pointer = 1;
-	pointer <<= (sizeof(unsigned char) * 8 - obj.right_bit);
-	set_bit(pointer, obj , 0);
-	pointer <<= (1);
-	set_bit(pointer, obj , 1);
-	return *this;
-}
-
-std::ostream& operator<<(std::ostream& stream, Trit const & trit) {
-	unsigned char pointer = 1;
-	pointer <<= (sizeof(unsigned char) * 8 - trit.get_pos());
-	if (pointer & trit.get_data()) {
-		stream << "True";
-	}
-	else {
-		pointer <<= (1);
-		if (pointer & trit.get_data()) {
-			stream << "False";
-		}
-		else {
-			stream << "Unknown";
-		}
-	}
-	return stream;
-}
-
-/*const Trit& Trit::operator&(Trit const & obj) {
-	TritType l_type = get_type();
-	TritType r_type = obj.get_type();
-	
-	Trit* res_obj = new Trit();
-
-	*res_obj = Tables::AndTable[l_type][r_type];
-
-	return *res_obj;
-}
-
-const Trit& Trit::operator|(Trit const & obj) {
-	TritType l_type = get_type();
-	TritType r_type = obj.get_type();
-
-	Trit* res_obj = new Trit();
-
-	*res_obj = Tables::OrTable[l_type][r_type];
-
-	return *res_obj;
-}*/
-
-
-Trit& operator&(Trit const & self, Trit const & obj) {
-	TritType l_type = self.get_type();
-	TritType r_type = obj.get_type();
-
-	Trit* res_obj = new Trit();
-
-	*res_obj = Tables::AndTable[int(l_type)][int(r_type)];
-
-	return *res_obj;
+Trit operator|(Trit const & self, Trit const & obj) {
+	return Tables::OrTable[self + 2][obj + 2];
 }
 
 bool operator==(Trit const & self, Trit const & obj) {
-	TritType a = self.get_type();
-	TritType b = obj.get_type();
-	return a == b ? true : false;
+	return self.data == obj.data;
 }
 
-Trit& operator|(Trit const & self, Trit const & obj) {
-	TritType l_type = self.get_type();
-	TritType r_type = obj.get_type();
-
-	Trit* res_obj = new Trit();
-
-	*res_obj = Tables::OrTable[int(l_type)][int(r_type)];
-
-	return *res_obj;
+Trit operator!(Trit const & self) {
+	return Tables::NegTable[self + 2];
 }
 
-Trit & Trit::operator!() {
-	TritType type = get_type();
-	Trit* res_obj = new Trit();
-	*res_obj = Tables::NegTable[int(type)];
-	return *res_obj;
-}
 Trit::~Trit()
 {
-	if(!another)
-		delete data;
 }

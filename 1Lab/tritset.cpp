@@ -1,4 +1,4 @@
-#include "TritSet.h"
+#include "tritset.h"
 
 //заменить sizeof(unsigned int) - на typedef
 
@@ -27,29 +27,11 @@ TritSet::TritSet(size_t alloc_trits) {
 		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
 		exit(1);
 	}
-	fill_unknown(0 , data_length);
+	fill_unknown(0, data_length);
 };
 
 
-Trit TritSet::operator[](const size_t trit_i)const{
-	size_t trit_index = trit_i;
-	if (trit_index >= trits_capacity) {
-			throw std::out_of_range("hey");///////////
-	}
-	trit_index++;
-	size_t full_index = trit_index * 2 / 8 / UN_INT_SIZE;
-	size_t diff = (trit_index * 2) % (8 * UN_INT_SIZE);
-	Trit wrapper;
-	if (diff == 0) {
-		wrapper.set_trit(data_array + full_index - 1, UN_INT_SIZE * 8 , false);
-	}
-	else {
-		wrapper.set_trit(data_array + full_index , diff , false);
-	}
-	return wrapper;//check
-}
-
-Trit TritSet::operator[](const size_t trit_i) {
+Trit TritSet::operator[](const size_t trit_i)const {
 	size_t trit_index = trit_i;
 	if (trit_index >= trits_capacity) {
 		throw std::out_of_range("hey");///////////
@@ -57,20 +39,38 @@ Trit TritSet::operator[](const size_t trit_i) {
 	trit_index++;
 	size_t full_index = trit_index * 2 / 8 / UN_INT_SIZE;
 	size_t diff = (trit_index * 2) % (8 * UN_INT_SIZE);
-	Trit wrapper;
+	TritRef wrapper;
 	if (diff == 0) {
-		wrapper.set_trit(data_array + full_index - 1, UN_INT_SIZE * 8 , true);
+		wrapper.set_trit(data_array + full_index - 1, UN_INT_SIZE * 8);
 	}
 	else {
-		wrapper.set_trit(data_array + full_index , diff , true);
+		wrapper.set_trit(data_array + full_index, diff);
+	}
+	return wrapper.tr_type;//check
+}
+
+TritRef TritSet::operator[](const size_t trit_i) {
+	size_t trit_index = trit_i;
+	if (trit_index >= trits_capacity) {
+		throw std::out_of_range("hey");///////////
+	}
+	trit_index++;
+	size_t full_index = trit_index * 2 / 8 / UN_INT_SIZE;
+	size_t diff = (trit_index * 2) % (8 * UN_INT_SIZE);
+	TritRef wrapper;
+	if (diff == 0) {
+		wrapper.set_trit(data_array + full_index - 1, UN_INT_SIZE * 8);
+	}
+	else {
+		wrapper.set_trit(data_array + full_index, diff);
 	}
 	return wrapper;//check
 }
 
 
 
-
-Trit TritSet::execute_operation(Trit const & a , Trit const & b , OperationType type)const{
+//////////////////////////////////////
+Trit TritSet::execute_operation(Trit const & a, Trit const & b, OperationType type)const {
 	if (type == And) {
 		return (a & b);
 	}
@@ -99,7 +99,7 @@ TritSet& TritSet::init_operation(TritSet const & obj, OperationType type)const {
 
 	for (size_t i = 0; i < res_trits_size; ++i) {
 		if (i < less_size) {
-			(*new_set)[i] = (execute_operation((*this)[i] ,   obj[i] , type));
+			(*new_set)[i] = (execute_operation((*this)[i], obj[i], type));
 		}
 		else {
 			(*new_set)[i] = (*greater)[i];
@@ -109,17 +109,17 @@ TritSet& TritSet::init_operation(TritSet const & obj, OperationType type)const {
 }
 
 
-TritSet& operator&(TritSet const & self , TritSet const & obj) {
+TritSet& operator&(TritSet const & self, TritSet const & obj) {
 	return self.init_operation(obj, And);
 }
 
-TritSet& operator|(TritSet const & self , TritSet const & obj) {
+TritSet& operator|(TritSet const & self, TritSet const & obj) {
 	return self.init_operation(obj, Or);
 }
 
 
 TritSet::TritSet(TritSet const & obj)
-	:data_length(obj.data_length) , trits_capacity(obj.trits_capacity) , used_capacity(obj.used_capacity) ,used_length(obj.used_length){
+	:data_length(obj.data_length), trits_capacity(obj.trits_capacity), used_capacity(obj.used_capacity), used_length(obj.used_length) {
 	data_array = new unsigned int[data_length];
 	for (size_t i = 0; i < data_length; ++i) {
 		data_array[i] = obj.data_array[i];
@@ -130,7 +130,7 @@ TritSet::TritSet(TritSet const & obj)
 
 TritSet & TritSet::operator=(TritSet const & obj) {
 
-	if (this !=& obj) {
+	if (this != &obj) {
 		TritSet(obj).swap(*this);
 	}
 	return *this;
@@ -138,7 +138,7 @@ TritSet & TritSet::operator=(TritSet const & obj) {
 
 void TritSet::shrink_to_fit() {
 	set_used_capacity();
-	resize_data(used_length , used_capacity);
+	resize_data(used_length, used_capacity);
 }
 
 size_t TritSet::cardinality(Trit value)const {
@@ -153,7 +153,7 @@ size_t TritSet::cardinality(Trit value)const {
 }
 
 
-void TritSet::resize_data(size_t end , size_t tr_length) {
+void TritSet::resize_data(size_t end, size_t tr_length) {
 	unsigned int* new_data = new unsigned int[end];
 	for (size_t i = 0; i < end; ++i) {
 		if (i < data_length) {
@@ -162,7 +162,7 @@ void TritSet::resize_data(size_t end , size_t tr_length) {
 		else {
 			new_data[i] = 0;
 		}
-			
+
 	}
 	delete[]data_array;
 	trits_capacity = tr_length;
@@ -201,7 +201,7 @@ void TritSet::set_used_capacity() const {
 			if (pointer & data_array[i - 1]) {
 				used_length = i;
 				diff = j / 2 + 1;
-				used_capacity = (i) * UN_INT_SIZE * 4 + diff;
+				used_capacity = (i)* UN_INT_SIZE * 4 + diff;
 				return;
 			}
 			pointer <<= (1);
@@ -209,14 +209,14 @@ void TritSet::set_used_capacity() const {
 	}
 }
 
-void TritSet::fill_unknown(size_t start , size_t end) {
+void TritSet::fill_unknown(size_t start, size_t end) {
 	for (size_t i = 0; i < data_length; ++i) {
 		data_array[i] = 0;
 	}
 }
 
 
-size_t TritSet::capacity() const{
+size_t TritSet::capacity() const {
 	return trits_capacity;
 }
 

@@ -177,6 +177,33 @@ trit.cpp.s:
 	$(MAKE) -f CMakeFiles/executeTests.dir/build.make CMakeFiles/executeTests.dir/trit.cpp.s
 .PHONY : trit.cpp.s
 
+tritref.o: tritref.cpp.o
+
+.PHONY : tritref.o
+
+# target to build an object file
+tritref.cpp.o:
+	$(MAKE) -f CMakeFiles/executeTests.dir/build.make CMakeFiles/executeTests.dir/tritref.cpp.o
+.PHONY : tritref.cpp.o
+
+tritref.i: tritref.cpp.i
+
+.PHONY : tritref.i
+
+# target to preprocess a source file
+tritref.cpp.i:
+	$(MAKE) -f CMakeFiles/executeTests.dir/build.make CMakeFiles/executeTests.dir/tritref.cpp.i
+.PHONY : tritref.cpp.i
+
+tritref.s: tritref.cpp.s
+
+.PHONY : tritref.s
+
+# target to generate assembly for a file
+tritref.cpp.s:
+	$(MAKE) -f CMakeFiles/executeTests.dir/build.make CMakeFiles/executeTests.dir/tritref.cpp.s
+.PHONY : tritref.cpp.s
+
 tritset.o: tritset.cpp.o
 
 .PHONY : tritset.o
@@ -219,6 +246,9 @@ help:
 	@echo "... trit.o"
 	@echo "... trit.i"
 	@echo "... trit.s"
+	@echo "... tritref.o"
+	@echo "... tritref.i"
+	@echo "... tritref.s"
 	@echo "... tritset.o"
 	@echo "... tritset.i"
 	@echo "... tritset.s"

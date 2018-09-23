@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/mnt/c/c++/Lab/1Lab/TritTest.cpp" "/mnt/c/c++/Lab/1Lab/CMakeFiles/executeTests.dir/TritTest.cpp.o"
   "/mnt/c/c++/Lab/1Lab/trit.cpp" "/mnt/c/c++/Lab/1Lab/CMakeFiles/executeTests.dir/trit.cpp.o"
+  "/mnt/c/c++/Lab/1Lab/tritref.cpp" "/mnt/c/c++/Lab/1Lab/CMakeFiles/executeTests.dir/tritref.cpp.o"
   "/mnt/c/c++/Lab/1Lab/tritset.cpp" "/mnt/c/c++/Lab/1Lab/CMakeFiles/executeTests.dir/tritset.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

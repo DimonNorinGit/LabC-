@@ -24,18 +24,18 @@ TEST(TritTest, BehaviorTest)
         TritSet set1(10);
         TritSet set2(10);
         for (size_t i = 0; i < set1.capacity(); ++i) {
-            set1[i] = TritType::True;
+            set1[i] = Types::True;
         }
         set1.resize(20);//не работает
         for (size_t i = 0; i < set2.capacity(); ++i) {
-            set2[i] = TritType::False;
+            set2[i] = Types::False;
         }
         for (size_t i = 0; i < set1.capacity(); ++i) {
             std::cout << set1[i];
         }
         set2 = (set2 | set1);
 
-        std::cout<<set2.cardinality(TritType::False);
+        std::cout<<set2.cardinality(Types::False);
     }
  
 

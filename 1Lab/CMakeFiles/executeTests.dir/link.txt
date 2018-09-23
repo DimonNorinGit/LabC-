@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/executeTests.dir/TritTest.cpp.o CMakeFiles/executeTests.dir/trit.cpp.o CMakeFiles/executeTests.dir/tritset.cpp.o  -o executeTests -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 
+/usr/bin/c++    -rdynamic CMakeFiles/executeTests.dir/TritTest.cpp.o CMakeFiles/executeTests.dir/trit.cpp.o CMakeFiles/executeTests.dir/tritset.cpp.o CMakeFiles/executeTests.dir/tritref.cpp.o  -o executeTests -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 

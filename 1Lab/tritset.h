@@ -1,12 +1,12 @@
 #pragma once
 #include<new>
-#include"Trit.h"
+#include"tritref.h"
 
 
 
 
 //01 - True
-//00 - Unknown
+//00 - Unk
 //10 - False
 enum OperationType { And, Or };
 
@@ -24,7 +24,7 @@ private:
 	void set_used_capacity()const;
 	void fill_unknown(size_t start, size_t end);
 	void resize_data(size_t end, size_t tr_length);
-	Trit execute_operation(Trit const & a, Trit const & b , OperationType type)const;
+	Trit execute_operation(Trit const & a, Trit const & b, OperationType type)const;
 	TritSet& init_operation(TritSet const & obj, OperationType type)const;
 
 public:
@@ -48,13 +48,13 @@ public:
 
 	TritSet & operator=(TritSet const& obj);
 
-	Trit operator[](size_t trit_i);
+	TritRef operator[](size_t trit_i);
 
 	Trit operator[](size_t trit_i)const;
 
-	friend TritSet& operator&(TritSet const & self , TritSet const & obj);
+	friend TritSet& operator&(TritSet const & self, TritSet const & obj);
 
-	friend TritSet& operator|(TritSet const & self , TritSet const & obj);
+	friend TritSet& operator|(TritSet const & self, TritSet const & obj);
 
 	~TritSet();
 };

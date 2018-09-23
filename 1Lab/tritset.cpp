@@ -95,8 +95,17 @@ TritSet& TritSet::init_operation(TritSet const & obj, OperationType type)const {
 		greater = &obj;
 	}
 
-	TritSet* new_set = new TritSet(res_trits_size);
-
+	TritSet* new_set = nullptr;
+	try
+	{
+		new_set = new TritSet(res_trits_size);
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		exit(1);
+	}
+	
 	for (size_t i = 0; i < res_trits_size; ++i) {
 		if (i < less_size) {
 			(*new_set)[i] = (execute_operation((*this)[i], obj[i], type));
@@ -120,7 +129,17 @@ TritSet& operator|(TritSet const & self, TritSet const & obj) {
 
 TritSet::TritSet(TritSet const & obj)
 	:data_length(obj.data_length), trits_capacity(obj.trits_capacity), used_capacity(obj.used_capacity), used_length(obj.used_length) {
-	data_array = new unsigned int[data_length];
+	
+	try
+	{
+		data_array = new unsigned int[data_length];
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		exit(1);
+	}
+
 	for (size_t i = 0; i < data_length; ++i) {
 		data_array[i] = obj.data_array[i];
 	}
@@ -154,7 +173,16 @@ size_t TritSet::cardinality(Trit value)const {
 
 
 void TritSet::resize_data(size_t end, size_t tr_length) {
-	unsigned int* new_data = new unsigned int[end];
+	unsigned int* new_data = nullptr;
+	try
+	{
+		new_data = new unsigned int[end];
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		exit(1);
+	}
 	for (size_t i = 0; i < end; ++i) {
 		if (i < data_length) {
 			new_data[i] = data_array[i];
@@ -162,7 +190,6 @@ void TritSet::resize_data(size_t end, size_t tr_length) {
 		else {
 			new_data[i] = 0;
 		}
-
 	}
 	delete[]data_array;
 	trits_capacity = tr_length;

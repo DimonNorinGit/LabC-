@@ -5,10 +5,10 @@
 class Trit
 {
 private:
-	unsigned char data;
+	char data;
 public:
 
-	explicit Trit(unsigned char d);
+	explicit Trit(char d);
 
 	Trit();
 

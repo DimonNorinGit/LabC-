@@ -26,7 +26,7 @@ Trit::operator int()const {
 	return data;
 }
 
-Trit::Trit(unsigned char d)
+Trit::Trit(char d)
 {
 	data = d;
 }

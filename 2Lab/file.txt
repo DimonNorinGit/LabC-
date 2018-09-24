@@ -1,0 +1,15 @@
+PUSH 12
+PRINT
+POP
+PRINT
+PUSH 12
+PUSH 12
++
+PRINT
+/
++
+-
+-
+PUSH 1
++
+PRINT

@@ -2,7 +2,6 @@
 #include "tritset.h" 
 #include <gtest/gtest.h>
 
-Trit operator&(Trit const & self, Trit const & obj);
 
  
 TEST(TritTest, BehaviorTest) 

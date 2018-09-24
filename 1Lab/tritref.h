@@ -33,3 +33,6 @@ public:
 };
 
 
+std::ostream& operator<<(std::ostream& stream, TritRef const & trit);
+
+

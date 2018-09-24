@@ -2,6 +2,7 @@
 //False , Unknown , True
 
 
+
 class Trit
 {
 private:
@@ -32,3 +33,11 @@ namespace Types {
 	const Trit True(1);
 	const Trit Unknown(0);
 }
+
+Trit operator&(Trit const & self, Trit const & obj);
+
+Trit operator|(Trit const & self, Trit const & obj);
+
+bool operator==(Trit const & self, Trit const & obj);
+
+Trit operator!(Trit const & self);

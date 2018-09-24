@@ -12,7 +12,6 @@ private:
 	unsigned char* data;
 	size_t right_bit;
 	Trit tr_type;
-	//void set_bit(unsigned char pointer, TritRef const & obj, size_t diff);
 	void set_new_value(Trit type, unsigned char pointer);
 	void set_true(unsigned char pointer);
 	void set_false(unsigned char pointer);

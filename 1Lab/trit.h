@@ -8,6 +8,8 @@ private:
 	char data;
 public:
 
+	friend class TritRef;
+
 	explicit Trit(char d);
 
 	Trit();

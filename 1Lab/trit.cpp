@@ -4,13 +4,13 @@
 namespace Tables {
 	using namespace Types;
 	const Trit AndTable[3][3] = {
-		{ False , False , False },
+	{ False , False , False },
 	{ False , Unknown , Unknown },
 	{ False , Unknown , True }
 	};
 
 	const Trit OrTable[3][3] = {
-		{ False , Unknown , True },
+	{ False , Unknown , True },
 	{ Unknown , Unknown , True },
 	{ True , True , True }
 	};
@@ -32,11 +32,11 @@ Trit::Trit(char d)
 }
 
 Trit operator&(Trit const & self, Trit const & obj) {
-	return Tables::AndTable[self + 2][obj + 2];
+	return Tables::AndTable[self + 1][obj + 1];
 }
 
 Trit operator|(Trit const & self, Trit const & obj) {
-	return Tables::OrTable[self + 2][obj + 2];
+	return Tables::OrTable[self + 1][obj + 1];
 }
 
 bool operator==(Trit const & self, Trit const & obj) {
@@ -44,7 +44,7 @@ bool operator==(Trit const & self, Trit const & obj) {
 }
 
 Trit operator!(Trit const & self) {
-	return Tables::NegTable[self + 2];
+	return Tables::NegTable[self + 1];
 }
 
 Trit::~Trit()
